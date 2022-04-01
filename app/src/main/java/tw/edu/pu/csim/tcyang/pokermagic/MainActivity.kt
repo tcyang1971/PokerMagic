@@ -2,15 +2,20 @@ package tw.edu.pu.csim.tcyang.pokermagic
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), View.OnTouchListener {
+class MainActivity : AppCompatActivity(), View.OnTouchListener, GestureDetector.OnGestureListener {
+
+    lateinit var gDetector: GestureDetector
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         img.setOnTouchListener(this)
+        gDetector = GestureDetector(this, this)
     }
 
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
@@ -20,6 +25,32 @@ class MainActivity : AppCompatActivity(), View.OnTouchListener {
         if(event?.action == MotionEvent.ACTION_UP){
             txv.text = "手指彈開"
         }
+        gDetector.onTouchEvent(event)
+        return true
+    }
+
+    override fun onDown(p0: MotionEvent?): Boolean {
+        return true
+    }
+
+    override fun onShowPress(p0: MotionEvent?) {
+
+    }
+
+    override fun onSingleTapUp(p0: MotionEvent?): Boolean {
+        return true
+    }
+
+    override fun onScroll(p0: MotionEvent?, p1: MotionEvent?, p2: Float, p3: Float): Boolean {
+        txv.text = "拖曳"
+        return true
+    }
+
+    override fun onLongPress(p0: MotionEvent?) {
+
+    }
+
+    override fun onFling(p0: MotionEvent?, p1: MotionEvent?, p2: Float, p3: Float): Boolean {
         return true
     }
 }
