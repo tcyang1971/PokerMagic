@@ -6,6 +6,7 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.Math.abs
 
 class MainActivity : AppCompatActivity(), View.OnTouchListener, GestureDetector.OnGestureListener {
 
@@ -22,11 +23,11 @@ class MainActivity : AppCompatActivity(), View.OnTouchListener, GestureDetector.
 
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
         if(event?.action == MotionEvent.ACTION_DOWN){
-            txv.text = "手指按下"
+            //txv.text = "手指按下"
             color  = ""
         }
         if(event?.action == MotionEvent.ACTION_UP){
-            txv.text = "手指彈開"
+            //txv.text = "手指彈開"
             if (color == ""){
                 img.setImageResource(R.drawable.joker)
             }
@@ -53,7 +54,7 @@ class MainActivity : AppCompatActivity(), View.OnTouchListener, GestureDetector.
     }
 
     override fun onScroll(e1: MotionEvent?, e2: MotionEvent?, p2: Float, p3: Float): Boolean {
-        txv.text = "拖曳"
+        //txv.text = "拖曳"
         if (e1!!.x >= e2!!.x){
             if (e1!!.y >= e2!!.y){  //左上
                 color = "c"
@@ -70,6 +71,9 @@ class MainActivity : AppCompatActivity(), View.OnTouchListener, GestureDetector.
                 color = "s"  //右下
             }
         }
+        //處理點數
+        number = abs(e1!!.y.toInt() - e2!!.y.toInt())/(img.height/26)+1
+        if (number>13){ number=13 }
         return true
     }
 
